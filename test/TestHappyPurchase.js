@@ -40,7 +40,7 @@ contract("Purchase", function () {
     assert.ok(result.length > 0);
   });
 
-  it("Buyer deposits funds", async function () {
+  it("Buyer deposits funds and confirms purchase", async function () {
     let result = await Purchase.methods.confirmPurchase().send({
       from: buyerAddress,
       value: price
@@ -54,6 +54,17 @@ contract("Purchase", function () {
     assert.ok(contractBalance == price);
     assert.ok(contractSellerAddress === sellerAddress);
     assert.ok(contractState == state["LOCKED"]);
+  });
+
+  it("Buyer confirms received", async function () {
+    let result = await Purchase.methods.confirmReceived().send({
+      from: buyerAddress
+    })
+    let contractState = await Purchase.state();
+
+    let contractBalance = await web3.eth.getBalance(Purchase.options.address);
+    assert.ok(contractBalance == 0);
+    assert.ok(contractState == state["INACTIVE"]);
   });
 
 });

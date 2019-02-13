@@ -56,9 +56,9 @@ contract Purchase {
         onlySeller
         inState(State.Created)
     {
-        emit Aborted();
         state = State.Inactive;
         seller.transfer(address(this).balance);
+        emit Aborted();
     }
 
     /// Confirm the purchase as buyer.
