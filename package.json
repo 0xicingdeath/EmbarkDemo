@@ -1,5 +1,5 @@
 {
-  "name": "embarkDemo",
+  "name": "newsc",
   "version": "0.0.1",
   "description": "",
   "scripts": {
@@ -8,5 +8,6 @@
   "author": "",
   "license": "ISC",
   "homepage": "",
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependencies": {}
 }
