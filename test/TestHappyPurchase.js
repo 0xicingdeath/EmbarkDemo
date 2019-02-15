@@ -13,6 +13,12 @@ let state = {
 }
 
 config({
+  deployment: {
+    accounts: [{
+      "mnemonic": "your mnemonic here",
+      "numAddresses": 10
+    }]
+  },
   contracts: {
     "Purchase": {
       args: [price],
@@ -37,6 +43,7 @@ contract("Purchase", function () {
 
   it("Web3 accounts should be defined", async function () {
     let result = accounts[0];
+    console.log(accounts);
     assert.ok(result.length > 0);
   });
 
