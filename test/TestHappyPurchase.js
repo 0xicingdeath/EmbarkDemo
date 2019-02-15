@@ -41,37 +41,24 @@ contract("Purchase", function () {
     assert.ok(contractState == state["CREATED"])
   });
 
-  it("Web3 accounts should be defined", async function () {
-    let result = accounts[0];
-    console.log(accounts);
-    assert.ok(result.length > 0);
+
+  it("should get the accounts", async function () {
+    assert.ok(accounts.length > 0);
   });
 
-  it("Buyer deposits funds and confirms purchase", async function () {
-    let result = await Purchase.methods.confirmPurchase().send({
-      from: buyerAddress,
-      value: price
-    })
-    let contractBuyerAddress = await Purchase.buyer();
-    let contractSellerAddress = await Purchase.seller();
-    let contractState = await Purchase.state();
-
-    let contractBalance = await web3.eth.getBalance(Purchase.options.address);
-    assert.ok(contractBuyerAddress === buyerAddress);
-    assert.ok(contractBalance == price);
-    assert.ok(contractSellerAddress === sellerAddress);
-    assert.ok(contractState == state["LOCKED"]);
+  it("signing transaction", async function () {
+    var message = await web3.eth.accounts.signTransaction({
+      to: '0xF0109fC8DF283027b6285cc889F5aA624EaC1F55',
+      value: '1000000000',
+      gas: 2000000
+    }, '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318');
+    console.log(message);
   });
 
-  it("Buyer confirms received", async function () {
-    let result = await Purchase.methods.confirmReceived().send({
-      from: buyerAddress
-    })
-    let contractState = await Purchase.state();
-
-    let contractBalance = await web3.eth.getBalance(Purchase.options.address);
-    assert.ok(contractBalance == 0);
-    assert.ok(contractState == state["INACTIVE"]);
+  it("creating accounts", async function () {
+    var newAccount = web3.eth.accounts.create();
+    console.log(newAccount);
   });
+
 
 });
